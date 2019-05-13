@@ -1,0 +1,61 @@
+<div class="row animated fadeIn fast">
+  <div class="col-md-4">
+    <h3>Seleccione archivos</h3>
+    <div
+      class="well drop-zone"
+      [ngClass]="{ 'file-over': overDrop }"
+      [files]="files"
+      (mouseOver)="overDrop = $event"
+      appNgDropFiles
+    >
+      <h4>Deje caer aquí los archivos</h4>
+      <img src="assets/drop-images.png" />
+    </div>
+  </div>
+  <div class="col-md-8">
+    <h4>Cargar archivos</h4>
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      (click)="uploadPhotos()"
+      [disabled]="files.length === 0"
+    >
+      Cargar foto
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-danger ml-3"
+      (click)="files = []"
+    >
+      Limpiar
+    </button>
+    <table class="table">
+      <thead class="thead=dark">
+        <tr>
+          <th>Nombre archivo</th>
+          <th>Tamaño</th>
+          <th>Progreso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of files">
+          <td [ngClass]="{ 'text-green': file.progress >= 100 }">
+            {{ file.fileName }}
+          </td>
+          <td>{{ file.file.size / 1024 / 1024 | number: "0.2-2" }} MB</td>
+          <td>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                [ngStyle]="{ width: file.progress + '%' }"
+              >
+                {{ file.progress }}
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
